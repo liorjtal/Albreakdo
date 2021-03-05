@@ -1,45 +1,51 @@
 #:kivy 1.0.9
 
-FloatLayout:
-    Background:
-        id: background
-        canvas.before:
-            Rectangle:
-                size: self.size
-                pos: self.pos
-                source: "sky.png"
-            Rectangle:
-                size: self.width, 138
-                pos: self.pos[0], self.pos[1] + self.height - 138
-                texture: self.cloud_texture
-            Rectangle:
-                size: self.width, 254
-                pos: self.pos[0] + 20, self.pos[1] + self.height - 300
-                texture: self.sun_texture
-    Label:
-        id: score
-        size_hint_y: None
-        height: 96
-        text: "0"
-        font_size: 40
-    Button:
-        text: "Start game"
-        background_normal: "transparent.png"
-        background_down: "transparent.png"
-        id: start_button
-        on_release:
-            self.disabled = True
-            self.opacity = 0
-            app.start_game()
-    Ball:
-        id: ball
-        source: "ball.png" 
-        pos: self.pos
+<Ball>:
+    size: 50, 50 
+    canvas:
+        Ellipse:
+            pos: self.pos
+            size: self.size
 
-    WhitePaddle:
-        id: whitepaddle
-        source: "whitepaddle.png"
-        pos: 0, (root.height / -3.0)
+<Paddle>:
+    size: 200, 25
+    canvas:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+<Game>:
+    canvas.before:
+        Rectangle:
+            size: self.size
+            pos: self.pos
+            source: "sky.png"
+        Rectangle:
+            size: self.width, 138
+            pos: self.pos[0], self.pos[1] + self.height - 138
+            texture: self.cloud_texture
+        Rectangle:
+            size: self.width, 254
+            pos: self.pos[0] + 20, self.pos[1] + self.height - 300
+            texture: self.sun_texture
+
+    ball: bb_ball
+    player1: bb_player
+    
+    Ball:
+        id: bb_ball
+        center: self.parent.center
+        
+    Paddle:
+        id: bb_player
+        y: root.y + 100
+        center_x: root.center_x
+
+    Label:
+        font_size: 70  
+        center_x: root.center_x
+        top: root.top - 100
+        text: str(root.player1.score)
 
     # SandPaddle:
     #     id: sandpaddle
