@@ -3,18 +3,20 @@
 <Ball>:
     size: 50, 50 
     canvas:
+        Color:
+            rgba: (self.ballR, self.ballG, self.ballB, 1)
         Ellipse:
-            pos: self.pos
+            pos: self.pos 
             size: self.size
 
 <Paddle>:
     size: 200, 25
     canvas:
+        Color:
+            rgba: (self.paddleR, self.paddleG, self.paddleB, 1)
         Rectangle:
             pos: self.pos
             size: self.size
-        Color:
-            rgba: self.r, 1, 1, 1
 
 <Game>:
     canvas.before:
@@ -30,6 +32,13 @@
             size: self.width, 254
             pos: self.pos[0] + 20, self.pos[1] + self.height - 300
             texture: self.sun_texture
+
+# canvas to activate at timer intervals. increase opacity as timer gets lower to make screen redder
+#     canvas:
+#         Color:
+#             rgba: (255, 0, 0, 0.2)
+#         Rectangle:
+#             size: self.size
 
     ball: bb_ball
     player1: bb_player
@@ -47,7 +56,7 @@
         font_size: 70  
         center_x: root.center_x
         top: root.top - 100
-        text: str(root.player1.score)
+        text: "{:.1f}".format(root.player1.timer)
 
     # SandPaddle:
     #     id: sandpaddle
