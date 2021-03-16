@@ -154,7 +154,7 @@ class Game(Widget):
 
     def _on_keyboard_down(self, keyboard, keycode, text, modifiers):
         """
-        keyboard controls to change paddles if playing on computer
+        keyboard controls for paddle if playing on computer
         """
         if keycode[1] == 'spacebar':
             #white to yellow
@@ -180,6 +180,13 @@ class Game(Widget):
                 self.player1.paddleR = 255
                 self.player1.paddleG = 255
                 self.player1.paddleB = 255
+
+        elif keycode[1] == 'right':
+            self.player1.center_x += 100
+
+        elif keycode[1] == 'left':
+            self.player1.center_x -= 100
+
         return True
 
     def on_touch_move(self, touch):
