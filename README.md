@@ -25,6 +25,6 @@ Mechanics/ideas still missing:
 > python main.py (for now. once game is completed it will be deployed, downloaded, and run so no pip install)
 
 
-- Kivy documentation to clarify code can be found here: https://kivy.org/doc/stable/
-- This game is was built upon the foundation of kivy's pong tutorial which is explained here: https://kivy.org/doc/stable/tutorials/pong.html
+#### Kivy documentation to clarify code can be found here: https://kivy.org/doc/stable/
+#### This game is was built upon the foundation of kivy's pong tutorial which is explained here: https://kivy.org/doc/stable/tutorials/pong.html
     
