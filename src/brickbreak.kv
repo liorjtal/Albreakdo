@@ -59,6 +59,34 @@
         top: root.top - 100
         text: "{:.1f}".format(root.player1.timer)
 
+<Control>:
+    canvas:
+        Color:
+            rgba: (0,255,0,1)
+        Rectangle:
+            size: self.size
+            pos: self.pos
+
+    Label:
+        font_size: 70  
+        center_x: root.center_x
+        top: root.top - 100
+        text: "Controls"
+
+<Info>:
+    canvas:
+        Color:
+            rgba: (0,0,255,1)
+        Rectangle:
+            size: self.size
+            pos: self.pos
+
+    Label:
+        font_size: 70  
+        center_x: root.center_x
+        top: root.top - 100
+        text: "Info"
+
 <Manager>:
     id: screen_manager
 
@@ -66,15 +94,37 @@
         name: 'home'
         Button:
             text: 'Play Albreakdo!'
-            halign: 'center'
-            valign: 'middle'
-            font_size: 100
-            text_size: self.size
+            size_hint: (.2, .2)
+            pos: (root.center_x - self.width/2, root.center_y + self.height)
+            font_size: 50
             on_release: root.current = 'game';game.serve_ball()
+        Button:
+            text: 'Controls'
+            size_hint: (.2, .2)
+            pos: (root.center_x - self.width/2, root.center_y)
+            font_size: 50
+            on_release: root.current = 'control'
+        Button:
+            text: 'About'
+            size_hint: (.2, .2)
+            pos: (root.center_x - self.width/2, root.center_y - self.height)
+            font_size: 50
+            on_release: root.current = 'info'
 
     Screen:
         name: 'game'
         Game:
             id: game
+
+    Screen:
+        name: 'control'
+        Control:
+            id: control
+
+    Screen:
+        name: 'info'
+        Info:
+            id: info
+
 
  

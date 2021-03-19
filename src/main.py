@@ -270,6 +270,17 @@ class Game(Widget):
         if self.ball.y < self.y:
             self.serve_ball()
 
+class Control(Widget):
+    """
+    add docstring
+    """
+    
+class Info(Widget):
+    """
+    add docstring
+    """
+
+
 class Manager(ScreenManager):
     pass
 
