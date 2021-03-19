@@ -33,12 +33,13 @@
             pos: self.pos[0] + 20, self.pos[1] + self.height - 300
             texture: self.sun_texture
 
-# canvas to activate at timer intervals. increase opacity as timer gets lower to make screen redder
-#     canvas:
-#         Color:
-#             rgba: (255, 0, 0, 0.2)
-#         Rectangle:
-#             size: self.size
+    # canvas to activate at timer intervals. increase opacity as timer gets lower to make screen redder
+    canvas:
+        Color:
+            rgba: (255,0,0,self.canvasOpacity)
+        Rectangle:
+            size: self.size
+            pos: self.pos
 
     ball: bb_ball
     player1: bb_player

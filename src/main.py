@@ -1,12 +1,14 @@
 from kivy.app import App
 from kivy.uix.widget import Widget
 from kivy.uix.image import Image
+from kivy.uix.label import Label
 from kivy.core.window import Window
 from kivy.clock import Clock
 from kivy.properties import (
     NumericProperty, ReferenceListProperty, ObjectProperty
 )
 from kivy.vector import Vector
+from kivy.graphics import Rectangle, Color
 
 class Paddle(Widget):
     """
@@ -124,8 +126,7 @@ class Game(Widget):
     """
     ball = ObjectProperty(None)
     player1 = ObjectProperty(None)
-    colors = [[255,255,255],[255,255,0],[0,255,0],[0,0,255]]
-    current = 0
+    canvasOpacity = NumericProperty(0)
 
     #logic/assets inspired by https://github.com/Dirk-Sandberg/2DKivyGame.git
     cloud_texture = ObjectProperty(None)
@@ -220,6 +221,10 @@ class Game(Widget):
         add docstring
         """
 
+        #print game over!
+        #if(self.canvasOpacity == 0.6):
+            #l = Label(text='Game Over!', font_size=100, pos=self.pos)
+
         # Update the uvpos of the texture
         self.cloud_texture.uvpos = ((self.cloud_texture.uvpos[0] +
             dt/2.0) % Window.width, self.cloud_texture.uvpos[1])
@@ -230,13 +235,20 @@ class Game(Widget):
         self.ball.move()
 
         #make timer slower or faster based on time left
-        #to do: activate a canvas on the screen which makes it redder at each mark
+        #activate a canvas on the screen which makes it redder at each mark
         if(self.player1.timer >= 80):
             self.player1.timer -= 2 * 0.01
         elif(self.player1.timer >= 50 and self.player1.timer < 80):
             self.player1.timer -= 4 * 0.01
-        if(self.player1.timer > 0 and self.player1.timer < 50):
+            self.canvasOpacity = 0.2
+        elif(self.player1.timer > 20 and self.player1.timer < 50):
             self.player1.timer -= 6 * 0.01
+            self.canvasOpacity = 0.4
+        elif(self.player1.timer > 0 and self.player1.timer < 20):
+            self.player1.timer -= 6 * 0.01
+            self.canvasOpacity = 0.6
+        elif(self.player1.timer <= 0):
+            self.canvasOpacity = 1
 
         # bounce off paddles
         self.player1.bounce_ball(self.ball)
