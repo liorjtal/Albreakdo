@@ -5,7 +5,7 @@ from kivy.uix.label import Label
 from kivy.core.window import Window
 from kivy.clock import Clock
 from kivy.properties import (
-    NumericProperty, ReferenceListProperty, ObjectProperty
+    NumericProperty, ReferenceListProperty, ObjectProperty, StringProperty
 )
 from kivy.vector import Vector
 from kivy.graphics import Rectangle, Color
@@ -19,7 +19,6 @@ class Paddle(Widget):
     paddleR = NumericProperty(255)
     paddleG = NumericProperty(255)
     paddleB = NumericProperty(255)
-    colors = [[255,255,255],[255,255,0],[0,255,0],[0,0,255]]
     timer = NumericProperty(100)
 
     def on_touch_up(self, touch):
@@ -27,14 +26,14 @@ class Paddle(Widget):
         touch controls to change paddles if touched paddle
         """
         if self.collide_point(touch.x, touch.y):
-            #white to yellow
+            #white to tan
             if(self.paddleR == 255 and self.paddleG == 255 and self.paddleB == 255):
-                self.paddleR = 255
-                self.paddleG = 255
-                self.paddleB = 0
+                self.paddleR = 210
+                self.paddleG = 180
+                self.paddleB = 140
 
-            #yellow to green
-            elif (self.paddleR == 255 and self.paddleG == 255 and self.paddleB == 0):
+            #tan to green
+            elif (self.paddleR == 210 and self.paddleG == 180 and self.paddleB == 140):
                 self.paddleR = 0
                 self.paddleG = 255
                 self.paddleB = 0
@@ -66,8 +65,8 @@ class Paddle(Widget):
                 else:
                     vel = Vector(-5, 15)
 
-            #if paddle is yellow
-            if(self.paddleR == 255 and self.paddleG == 255 and self.paddleB == 0):
+            #if paddle is tan
+            if(self.paddleR == 210 and self.paddleG == 180 and self.paddleB == 140):
                 if (vx > 0):
                     vel = Vector(4, 12)
                 else:
@@ -87,16 +86,11 @@ class Paddle(Widget):
                 else:
                     vel = Vector(-2, 6)
             
+            #change ball color and velocity to match paddle hit
             ball.velocity = vel.x, vel.y
             ball.ballR = self.paddleR
             ball.ballG = self.paddleG
             ball.ballB = self.paddleB
-
-    def paddle_shrink(self):
-        """
-        TODO: decrease paddle size as time of play or number of missed balls increases
-        """
-
 
 class Ball(Widget):
     """
@@ -147,8 +141,6 @@ class Game(Widget):
         self.sun_texture = Image(source="sun.png").texture
         self.sun_texture.uvsize = (Window.width / self.sun_texture.width, -1)
 
-        Clock.schedule_interval(self.update, 1.0 / 60.0)
-
     def _keyboard_closed(self):
         """
         add docstring
@@ -161,14 +153,14 @@ class Game(Widget):
         keyboard controls for paddle if playing on computer
         """
         if keycode[1] == 'spacebar':
-            #white to yellow
+            #white to tan
             if(self.player1.paddleR == 255 and self.player1.paddleG == 255 and self.player1.paddleB == 255):
-                self.player1.paddleR = 255
-                self.player1.paddleG = 255
-                self.player1.paddleB = 0
+                self.player1.paddleR = 210
+                self.player1.paddleG = 180
+                self.player1.paddleB = 140
 
-            #yellow to green
-            elif (self.player1.paddleR == 255 and self.player1.paddleG == 255 and self.player1.paddleB == 0):
+            #tan to green
+            elif (self.player1.paddleR == 210 and self.player1.paddleG == 180 and self.player1.paddleB == 140):
                 self.player1.paddleR = 0
                 self.player1.paddleG = 255
                 self.player1.paddleB = 0
@@ -270,16 +262,55 @@ class Game(Widget):
         if self.ball.y < self.y:
             self.serve_ball()
 
+    def play(self):
+        self.serve_ball()
+        Clock.schedule_interval(self.update, 1.0 / 60.0)
+
+
 class Control(Widget):
     """
     add docstring
     """
+    player1 = ObjectProperty(None)
+
+    def on_touch_move(self, touch):
+        """
+        add docstring
+        """
+        if touch.x < self.width / 2:
+            self.player1.center_x = touch.x
+        if touch.x > self.width - self.width / 2:
+            self.player1.center_x = touch.x
     
-class Info(Widget):
+class About(Widget):
     """
     add docstring
     """
 
+class ElectroMagneticSpectrum(Widget):
+    """
+    add docstring
+    """
+
+class Sun(Widget):
+    """
+    add docstring
+    """
+
+class Albedo(Widget):
+    """
+    add docstring
+    """
+
+class Colors(Widget):
+    """
+    add docstring
+    """
+
+class Gasses(Widget):
+    """
+    add docstring
+    """
 
 class Manager(ScreenManager):
     pass

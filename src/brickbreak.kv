@@ -4,7 +4,7 @@
     size: 50, 50 
     canvas:
         Color:
-            rgba: (self.ballR, self.ballG, self.ballB, 1)
+            rgba: (self.ballR/255, self.ballG/255, self.ballB/255, 1)
         Ellipse:
             pos: self.pos 
             size: self.size
@@ -13,7 +13,7 @@
     size: 200, 25
     canvas:
         Color:
-            rgba: (self.paddleR, self.paddleG, self.paddleB, 1)
+            rgba: (self.paddleR/255, self.paddleG/255, self.paddleB/255, 1)
         Rectangle:
             pos: self.pos
             size: self.size
@@ -56,27 +56,47 @@
     Label:
         font_size: 70  
         center_x: root.center_x
-        top: root.top - 100
+        top: root.top - self.height
         text: "{:.1f}".format(root.player1.timer)
 
 <Control>:
     canvas:
         Color:
-            rgba: (0,255,0,1)
+            rgba: (37/255, 150/255, 190/255, 1)
         Rectangle:
             size: self.size
             pos: self.pos
 
+    player1: bb_player
+
+    Paddle:
+        id: bb_player
+        y: root.y + 100
+        center_x: root.center_x
+
     Label:
         font_size: 70  
         center_x: root.center_x
-        top: root.top - 100
+        top: root.top - self.height
         text: "Controls"
 
-<Info>:
+    Label:
+        font_size: 50  
+        center_x: root.center_x
+        center_y: root.center_y + self.height
+        text: 'Touch the screen to move the paddle\nTouch the paddle to change paddle colors'
+
+    Label:
+        font_size: 80  
+        center_x: root.center_x - self.height/2
+        center_y: root.center_y - self.height/2
+        text: '[b]Try it out![/b]'
+        markup: True
+
+<About>:
     canvas:
         Color:
-            rgba: (0,0,255,1)
+            rgba: (37/255, 150/255, 190/255, 1)
         Rectangle:
             size: self.size
             pos: self.pos
@@ -84,32 +104,163 @@
     Label:
         font_size: 70  
         center_x: root.center_x
-        top: root.top - 100
-        text: "Info"
+        top: root.top - self.height
+        text: "About"
+
+<ElectroMagneticSpectrum>:
+    canvas:
+        Color:
+            rgba: (37/255, 150/255, 190/255, 1)
+        Rectangle:
+            size: self.size
+            pos: self.pos
+
+    Label:
+        font_size: 40  
+        center_x: root.center_x - self.width/3
+        top: root.top - self.height
+        text: "EM-Spectrum"
+
+    #:import gi gameinfo
+    Label:
+        size_hint_y: None
+        text_size: self.width, None
+        height: self.texture_size[1]
+        width: root.width/1.1
+        text: gi.emText
+        pos: (root.center_x - self.width/2, root.center_y - self.height/1.5)
+        font_size: 40
+
+<Sun>:
+    canvas:
+        Color:
+            rgba: (37/255, 150/255, 190/255, 1)
+        Rectangle:
+            size: self.size
+            pos: self.pos
+
+    Label:
+        font_size: 60  
+        center_x: root.center_x
+        top: root.top - self.height
+        text: "Sun"
+
+    #:import gi gameinfo
+    Label:
+        size_hint_y: None
+        text_size: self.width, None
+        height: self.texture_size[1]
+        width: root.width/1.1
+        text: gi.sunText
+        pos: (root.center_x - self.width/2, root.center_y - self.height/1.5)
+        font_size: 40
+
+<Albedo>:
+    canvas:
+        Color:
+            rgba: (37/255, 150/255, 190/255, 1)
+        Rectangle:
+            size: self.size
+            pos: self.pos
+
+    Label:
+        font_size: 60  
+        center_x: root.center_x
+        top: root.top - self.height
+        text: "Albedo"
+
+    #:import gi gameinfo
+    Label:
+        size_hint_y: None
+        text_size: self.width, None
+        height: self.texture_size[1]
+        width: root.width/1.1
+        text: gi.albedoText
+        pos: (root.center_x - self.width/2, root.center_y - self.height/1.5)
+        font_size: 40
+
+<Colors>:
+    canvas:
+        Color:
+            rgba: (37/255, 150/255, 190/255, 1)
+        Rectangle:
+            size: self.size
+            pos: self.pos
+
+    Label:
+        font_size: 60  
+        center_x: root.center_x
+        top: root.top - self.height
+        text: "Colors"
+
+    #:import gi gameinfo
+    Label:
+        size_hint_y: None
+        text_size: self.width, None
+        height: self.texture_size[1]
+        width: root.width/1.1
+        text: gi.colorsText
+        pos: (root.center_x - self.width/2, root.center_y - self.height/1.5)
+        font_size: 40
+
+<Gasses>:
+    canvas:
+        Color:
+            rgba: (37/255, 150/255, 190/255, 1)
+        Rectangle:
+            size: self.size
+            pos: self.pos
+
+    Label:
+        font_size: 60  
+        center_x: root.center_x
+        top: root.top - self.height
+        text: "Gasses"
+
+    #:import gi gameinfo
+    Label:
+        size_hint_y: None
+        text_size: self.width, None
+        height: self.texture_size[1]
+        width: root.width/1.1
+        text: gi.gassesText
+        pos: (root.center_x - self.width/2, root.center_y - self.height/1.5)
+        font_size: 40 
 
 <Manager>:
     id: screen_manager
 
     Screen:
         name: 'home'
+        canvas.after:
+            Color:
+                rgba: (37/255, 150/255, 190/255, 0.3)
+            Rectangle:
+                size: self.size
+                pos: self.pos
+        canvas:
+            Rectangle:
+                size: self.size
+                pos: self.pos
+                source: "menu.png"
         Button:
             text: 'Play Albreakdo!'
-            size_hint: (.2, .2)
+            size_hint: (.4, .2)
             pos: (root.center_x - self.width/2, root.center_y + self.height)
             font_size: 50
-            on_release: root.current = 'game';game.serve_ball()
+            on_release: root.current = 'game';game.play()
         Button:
             text: 'Controls'
-            size_hint: (.2, .2)
-            pos: (root.center_x - self.width/2, root.center_y)
+            size_hint: (.4, .2)
+            pos: (root.center_x - self.width/2, root.center_y - self.height/2)
             font_size: 50
             on_release: root.current = 'control'
         Button:
             text: 'About'
-            size_hint: (.2, .2)
-            pos: (root.center_x - self.width/2, root.center_y - self.height)
+            size_hint: (.4, .2)
+            pos: (root.center_x - self.width/2, root.center_y - self.height * 2)
             font_size: 50
-            on_release: root.current = 'info'
+            on_release: root.current = 'about'
 
     Screen:
         name: 'game'
@@ -120,11 +271,119 @@
         name: 'control'
         Control:
             id: control
+        Button:
+            text: 'Back to Main Menu'
+            rgba: (37/255, 150/255, 190/255, 0.5)
+            background_color: (37/255, 150/255, 190/255, 0.7)
+            size_hint: (.3, .15)
+            pos: (root.center_x + self.width/2, root.center_y + self.height * 2)
+            font_size: 40
+            on_release: root.current = 'home'
 
     Screen:
-        name: 'info'
-        Info:
-            id: info
+        name: 'about'
+        About:
+            id: about
+        Button:
+            text: 'Back to Main Menu'
+            rgba: (37/255, 150/255, 190/255, 0.5)
+            background_color: (37/255, 150/255, 190/255, 0.7)
+            size_hint: (.3, .15)
+            pos: (root.center_x + self.width/2, root.center_y + self.height * 2)
+            font_size: 40
+            on_release: root.current = 'home'
+        Button:
+            text: 'Electromagnetic Spectrum'
+            size_hint: (.4, .1)
+            pos: (root.center_x - self.width/2, root.center_y + self.height)
+            font_size: 30
+            on_release: root.current = 'em'
+        Button:
+            text: 'Sun'
+            size_hint: (.4, .1)
+            pos: (root.center_x - self.width/2, root.center_y)
+            font_size: 30
+            on_release: root.current = 'sun'
+        Button:
+            text: 'Albedo'
+            size_hint: (.4, .1)
+            pos: (root.center_x - self.width/2, root.center_y - self.height)
+            font_size: 30
+            on_release: root.current = 'albedo'
+        Button:
+            text: 'Colors'
+            size_hint: (.4, .1)
+            pos: (root.center_x - self.width/2, root.center_y - self.height * 2)
+            font_size: 30
+            on_release: root.current = 'colors'
+        Button:
+            text: 'Gasses'
+            size_hint: (.4, .1)
+            pos: (root.center_x - self.width/2, root.center_y - self.height * 3)
+            font_size: 30
+            on_release: root.current = 'gasses'
+
+    Screen:
+        name: 'em'
+        ElectroMagneticSpectrum:
+            id: em
+        Button:
+            text: 'Back to About'
+            rgba: (37/255, 150/255, 190/255, 0.5)
+            background_color: (37/255, 150/255, 190/255, 0.7)
+            size_hint: (.3, .15)
+            pos: (root.center_x + self.width/2, root.center_y + self.height * 2)
+            font_size: 40
+            on_release: root.current = 'about'
+    Screen:
+        name: 'sun'
+        Sun:
+            id: sun
+        Button:
+            text: 'Back to About'
+            rgba: (37/255, 150/255, 190/255, 0.5)
+            background_color: (37/255, 150/255, 190/255, 0.7)
+            size_hint: (.3, .15)
+            pos: (root.center_x + self.width/2, root.center_y + self.height * 2)
+            font_size: 40
+            on_release: root.current = 'about'
+    Screen:
+        name: 'albedo'
+        Albedo:
+            id: albedo
+        Button:
+            text: 'Back to About'
+            rgba: (37/255, 150/255, 190/255, 0.5)
+            background_color: (37/255, 150/255, 190/255, 0.7)
+            size_hint: (.3, .15)
+            pos: (root.center_x + self.width/2, root.center_y + self.height * 2)
+            font_size: 40
+            on_release: root.current = 'about'
+    Screen:
+        name: 'colors'
+        Colors:
+            id: colors
+        Button:
+            text: 'Back to About'
+            rgba: (37/255, 150/255, 190/255, 0.5)
+            background_color: (37/255, 150/255, 190/255, 0.7)
+            size_hint: (.3, .15)
+            pos: (root.center_x + self.width/2, root.center_y + self.height * 2)
+            font_size: 40
+            on_release: root.current = 'about'
+    Screen:
+        name: 'gasses'
+        Gasses:
+            id: gasses
+        Button:
+            text: 'Back to About'
+            rgba: (37/255, 150/255, 190/255, 0.5)
+            background_color: (37/255, 150/255, 190/255, 0.7)
+            size_hint: (.3, .15)
+            pos: (root.center_x + self.width/2, root.center_y + self.height * 2)
+            font_size: 40
+            on_release: root.current = 'about'
+
 
 
  
