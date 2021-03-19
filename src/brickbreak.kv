@@ -59,15 +59,22 @@
         top: root.top - 100
         text: "{:.1f}".format(root.player1.timer)
 
-    # SandPaddle:
-    #     id: sandpaddle
-    #     source: "sandpaddle.png"
+<Manager>:
+    id: screen_manager
 
-    # GreenPaddle:
-    #     id: greenpaddle
-    #     source: "greenpaddle.png"
+    Screen:
+        name: 'home'
+        Button:
+            text: 'Play Albreakdo!'
+            halign: 'center'
+            valign: 'middle'
+            font_size: 100
+            text_size: self.size
+            on_release: root.current = 'game';game.serve_ball()
 
-    # BluePaddle:
-    #     id: bluepaddle
-    #     source: "bluepaddle.png"
+    Screen:
+        name: 'game'
+        Game:
+            id: game
+
  

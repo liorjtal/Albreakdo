@@ -9,6 +9,7 @@ from kivy.properties import (
 )
 from kivy.vector import Vector
 from kivy.graphics import Rectangle, Color
+from kivy.uix.screenmanager import ScreenManager, Screen, WipeTransition
 
 class Paddle(Widget):
     """
@@ -146,6 +147,8 @@ class Game(Widget):
         self.sun_texture = Image(source="sun.png").texture
         self.sun_texture.uvsize = (Window.width / self.sun_texture.width, -1)
 
+        Clock.schedule_interval(self.update, 1.0 / 60.0)
+
     def _keyboard_closed(self):
         """
         add docstring
@@ -267,6 +270,9 @@ class Game(Widget):
         if self.ball.y < self.y:
             self.serve_ball()
 
+class Manager(ScreenManager):
+    pass
+
 class BrickBreakApp(App):
     """
     add docstring
@@ -279,11 +285,7 @@ class BrickBreakApp(App):
         """
         add docstring
         """
-        game = Game()
-        game.serve_ball()
-        Clock.schedule_interval(game.update, 1.0 / 60.0)
-        return game
-
+        return Manager(transition=WipeTransition())
 
 if __name__ == '__main__':
     BrickBreakApp().run()
