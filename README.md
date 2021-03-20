@@ -2,14 +2,13 @@
 
 My program is a brick-break style game that teaches the user important fundamental concepts in the field of environmental science relating to albedo and climate change.
 
-Mechanics/ideas still missing:
+Mechanics still missing:
 
-- Scene management (main menu, controls menu, info menu, pause menu, reset button)
-- Update canvas color based on timer value
+- Pause menu, reset button, game over
 - Breakable blocks each with own color
 - Breaking a color brick with the same color ball adds more time to timer
 - Some breakable blocks will represent greenhouse gas blocks
-- Greenhouse blocks that are destroyed speed up the timer and make the screen redder and redder (warming up the planet) until player loses game
+- Greenhouse blocks that are destroyed speed up the timer
 
 ### In Development
 
