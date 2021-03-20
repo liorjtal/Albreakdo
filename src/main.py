@@ -48,8 +48,7 @@ class Paddle(Widget):
             elif (self.paddleR == 0 and self.paddleG == 0 and self.paddleB == 255):
                 self.paddleR = 255
                 self.paddleG = 255
-                self.paddleB = 255
-            
+                self.paddleB = 255            
 
     def bounce_ball(self, ball):
         """
@@ -131,6 +130,7 @@ class Game(Widget):
         super(Game,self).__init__(**kwargs)
         self._keyboard = Window.request_keyboard(self._keyboard_closed, self)
         self._keyboard.bind(on_key_down=self._on_keyboard_down)
+        self._keyboard.bind(on_key_up=self._on_keyboard_up)
 
         # Create textures
         self.cloud_texture = Image(source="cloud.png").texture
@@ -141,17 +141,23 @@ class Game(Widget):
         self.sun_texture = Image(source="sun.png").texture
         self.sun_texture.uvsize = (Window.width / self.sun_texture.width, -1)
 
+        self.keyPressed = set()
+
     def _keyboard_closed(self):
         """
         add docstring
         """
         self._keyboard.unbind(on_key_down=self._on_keyboard_down)
+        self._keyboard.unbind(on_key_up=self._on_keyboard_up)
         self._keyboard = None
 
     def _on_keyboard_down(self, keyboard, keycode, text, modifiers):
         """
         keyboard controls for paddle if playing on computer
         """
+
+        self.keyPressed.add(keycode[1])
+
         if keycode[1] == 'spacebar':
             #white to tan
             if(self.player1.paddleR == 255 and self.player1.paddleG == 255 and self.player1.paddleB == 255):
@@ -177,13 +183,31 @@ class Game(Widget):
                 self.player1.paddleG = 255
                 self.player1.paddleB = 255
 
-        elif keycode[1] == 'right':
-            self.player1.center_x += 100
-
-        elif keycode[1] == 'left':
-            self.player1.center_x -= 100
-
         return True
+
+    def _on_keyboard_up(self, keyboard, keycode):
+        """
+        keyboard controls for paddle if playing on computer
+        """
+        if keycode[1] in self.keyPressed:
+            self.keyPressed.remove(keycode[1])
+
+    def key_move(self, dt):
+        """
+        keyboard controls for paddle if playing on computer
+        """
+        currentx = self.player1.pos[0]
+        currenty = self.player1.pos[1]
+
+        step_size = 1000 * dt
+
+        if 'right' in self.keyPressed:
+            currentx += step_size
+
+        if 'left' in self.keyPressed:
+            currentx -= step_size
+
+        self.player1.pos = (currentx, currenty)
 
     def on_touch_move(self, touch):
         """
@@ -228,6 +252,7 @@ class Game(Widget):
         texture.dispatch(self)
 
         self.ball.move()
+        self.key_move(dt)
 
         #make timer slower or faster based on time left
         #activate a canvas on the screen which makes it redder at each mark
