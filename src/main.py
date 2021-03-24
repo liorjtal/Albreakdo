@@ -12,7 +12,7 @@ from kivy.vector import Vector
 from kivy.graphics import Rectangle, Color
 from kivy.uix.screenmanager import ScreenManager, Screen, WipeTransition
 
-DURATION = 5
+DURATION = 20
 
 class Paddle(Widget):
     """
@@ -145,12 +145,16 @@ class Game(Widget):
         self.sun_texture.uvsize = (Window.width / self.sun_texture.width, -1)
 
         button_size = (Window.width/5, Window.height/8)
-        button_sh = (None,None)
         self.restart_button = Button(
             pos = (Window.width*0.4, self.center_y + self.height * 2.5),
-            size = button_size, text='Try Again', on_release=self.restart
+            size = button_size, text='Try Again',
+            on_release=self.restart
         )
-        self.menu_button = Button(pos = (Window.width*0.4, self.center_y + self.height * 1.5), size = button_size, text='Back to Main Menu', on_release=self.change_screen)
+        self.menu_button = Button(
+            pos = (Window.width*0.4, self.center_y + self.height * 1.5),
+            size = button_size, text='Back to Main Menu',
+            on_release=self.change_screen
+        )
 
         self.keyPressed = set()
 
@@ -273,7 +277,7 @@ class Game(Widget):
         elif(self.player1.timer >= 50 and self.player1.timer < 80):
             self.player1.timer -= 4 * 0.01
             self.canvasOpacity = 0.2
-        elif(self.player1.timer > 20 and self.player1.timer < 50):
+        elif(self.player1.timer >= 20 and self.player1.timer < 50):
             self.player1.timer -= 6 * 0.01
             self.canvasOpacity = 0.4
         elif(self.player1.timer > 0 and self.player1.timer < 20):
@@ -306,6 +310,7 @@ class Game(Widget):
             self.serve_ball()
 
     def play(self):
+        self.reset()
         self.serve_ball()
         Clock.schedule_interval(self.update, 1.0 / 60.0)
 
@@ -320,13 +325,14 @@ class Game(Widget):
         self.play()
 
     def change_screen(self, instance):
-        self.reset()
-        App.get_running_app().current = "home"
+        sm = self.parent.parent
+        sm.current = 'home'
 
     def reset(self):
-        self.player1.timer = DURATION
         self.remove_widget(self.restart_button)
         self.remove_widget(self.menu_button)
+        Clock.unschedule(self.update)
+        self.player1.timer = DURATION
 
 class Control(Widget):
     """
