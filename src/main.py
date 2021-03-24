@@ -144,8 +144,13 @@ class Game(Widget):
         self.sun_texture = Image(source="sun.png").texture
         self.sun_texture.uvsize = (Window.width / self.sun_texture.width, -1)
 
-        self.restart_button = Button(text='Try Again', on_release=self.restart)
-        self.menu_button = Button(text='Back to Main Menu', on_release=self.change_screen)
+        button_size = (Window.width/5, Window.height/8)
+        button_sh = (None,None)
+        self.restart_button = Button(
+            pos = (Window.width*0.4, self.center_y + self.height * 2.5),
+            size = button_size, text='Try Again', on_release=self.restart
+        )
+        self.menu_button = Button(pos = (Window.width*0.4, self.center_y + self.height * 1.5), size = button_size, text='Back to Main Menu', on_release=self.change_screen)
 
         self.keyPressed = set()
 
