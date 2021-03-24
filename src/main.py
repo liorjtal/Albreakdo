@@ -272,10 +272,15 @@ class Game(Widget):
             self.player1.timer -= 6 * 0.01
             self.canvasOpacity = 0.4
         elif(self.player1.timer > 0 and self.player1.timer < 20):
-            self.player1.timer -= 6 * 0.01
-            self.canvasOpacity = 0.6
+            if self.player1.timer < 6 * 0.01:
+                self.player1.timer = 0
+                self.game_over()
+            else:
+                self.player1.timer -= 6 * 0.01
+                self.canvasOpacity = 0.6
         elif(self.player1.timer <= 0):
             self.canvasOpacity = 1
+            self.player1.timer = 0
             self.game_over()
 
         # bounce off paddles
