@@ -11,6 +11,7 @@ from kivy.properties import (
 from kivy.vector import Vector
 from kivy.graphics import Rectangle, Color
 from kivy.uix.screenmanager import ScreenManager, Screen, WipeTransition
+from buttons import AboutButton
 
 DURATION = 100
 
