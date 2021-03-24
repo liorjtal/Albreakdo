@@ -12,7 +12,7 @@ from kivy.vector import Vector
 from kivy.graphics import Rectangle, Color
 from kivy.uix.screenmanager import ScreenManager, Screen, WipeTransition
 
-DURATION = 20
+DURATION = 100
 
 class Paddle(Widget):
     """
