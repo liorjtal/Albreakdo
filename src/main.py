@@ -2,6 +2,7 @@ from kivy.app import App
 from kivy.uix.widget import Widget
 from kivy.uix.image import Image
 from kivy.uix.label import Label
+from kivy.uix.button import Button
 from kivy.core.window import Window
 from kivy.clock import Clock
 from kivy.properties import (
@@ -10,6 +11,9 @@ from kivy.properties import (
 from kivy.vector import Vector
 from kivy.graphics import Rectangle, Color
 from kivy.uix.screenmanager import ScreenManager, Screen, WipeTransition
+from buttons import AboutButton
+
+DURATION = 100
 
 class Paddle(Widget):
     """
@@ -19,7 +23,7 @@ class Paddle(Widget):
     paddleR = NumericProperty(255)
     paddleG = NumericProperty(255)
     paddleB = NumericProperty(255)
-    timer = NumericProperty(100)
+    timer = NumericProperty(DURATION)
 
     def on_touch_up(self, touch):
         """
@@ -141,6 +145,18 @@ class Game(Widget):
         self.sun_texture = Image(source="sun.png").texture
         self.sun_texture.uvsize = (Window.width / self.sun_texture.width, -1)
 
+        button_size = (Window.width/5, Window.height/8)
+        self.restart_button = Button(
+            pos = (Window.width*0.4, self.center_y + self.height * 2.5),
+            size = button_size, text='Try Again',
+            on_release=self.restart
+        )
+        self.menu_button = Button(
+            pos = (Window.width*0.4, self.center_y + self.height * 1.5),
+            size = button_size, text='Back to Main Menu',
+            on_release=self.change_screen
+        )
+
         self.keyPressed = set()
 
     def _keyboard_closed(self):
@@ -257,18 +273,25 @@ class Game(Widget):
         #make timer slower or faster based on time left
         #activate a canvas on the screen which makes it redder at each mark
         if(self.player1.timer >= 80):
+            self.canvasOpacity = 0
             self.player1.timer -= 2 * 0.01
         elif(self.player1.timer >= 50 and self.player1.timer < 80):
             self.player1.timer -= 4 * 0.01
             self.canvasOpacity = 0.2
-        elif(self.player1.timer > 20 and self.player1.timer < 50):
+        elif(self.player1.timer >= 20 and self.player1.timer < 50):
             self.player1.timer -= 6 * 0.01
             self.canvasOpacity = 0.4
         elif(self.player1.timer > 0 and self.player1.timer < 20):
-            self.player1.timer -= 6 * 0.01
-            self.canvasOpacity = 0.6
+            if self.player1.timer < 6 * 0.01:
+                self.player1.timer = 0
+                self.game_over()
+            else:
+                self.player1.timer -= 6 * 0.01
+                self.canvasOpacity = 0.6
         elif(self.player1.timer <= 0):
             self.canvasOpacity = 1
+            self.player1.timer = 0
+            self.game_over()
 
         # bounce off paddles
         self.player1.bounce_ball(self.ball)
@@ -288,9 +311,29 @@ class Game(Widget):
             self.serve_ball()
 
     def play(self):
+        self.reset()
         self.serve_ball()
         Clock.schedule_interval(self.update, 1.0 / 60.0)
 
+    def game_over(self):
+        self.remove_widget(self.restart_button)
+        self.remove_widget(self.menu_button)
+        self.add_widget(self.restart_button)
+        self.add_widget(self.menu_button)
+
+    def restart(self, instance):
+        self.reset()
+        self.play()
+
+    def change_screen(self, instance):
+        sm = self.parent.parent
+        sm.current = 'home'
+
+    def reset(self):
+        self.remove_widget(self.restart_button)
+        self.remove_widget(self.menu_button)
+        Clock.unschedule(self.update)
+        self.player1.timer = DURATION
 
 class Control(Widget):
     """
