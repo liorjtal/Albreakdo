@@ -8,7 +8,6 @@ class AboutButton(Button):
         self.rgba= (37/255, 150/255, 190/255, 0.5)
         self.background_color= (37/255, 150/255, 190/255, 0.7)
         self.size_hint= (.3, .15)
-        self.pos= (self.center_x + self.width/2, self.center_y + self.height * 2)
         self.font_size= 40
 
     def on_release(self):

@@ -1,7 +1,7 @@
 #:kivy 1.0.9
 
 <Ball>:
-    size: 50, 50 
+    size: 50, 50
     canvas:
         Color:
             rgba: (self.ballR/255, self.ballG/255, self.ballB/255, 1)
@@ -50,11 +50,11 @@
         
     Paddle:
         id: bb_player
-        y: root.y + 100
+        y: root.y + self.height * 2
         center_x: root.center_x
 
     Label:
-        font_size: 70  
+        font_size: '30sp'
         center_x: root.center_x
         top: root.top - self.height
         text: "{:.1f}".format(root.player1.timer)
@@ -75,19 +75,19 @@
         center_x: root.center_x
 
     Label:
-        font_size: 70  
+        font_size: '30sp'  
         center_x: root.center_x
         top: root.top - self.height
         text: "Controls"
 
     Label:
-        font_size: 50  
+        font_size: '20sp'
         center_x: root.center_x
         center_y: root.center_y + self.height
         text: 'Touch the screen to move the paddle\nTouch the paddle to change paddle colors'
 
     Label:
-        font_size: 80  
+        font_size: '50sp'  
         center_x: root.center_x - self.height/2
         center_y: root.center_y - self.height/2
         text: '[b]Try it out![/b]'
@@ -102,7 +102,7 @@
             pos: self.pos
 
     Label:
-        font_size: 70  
+        font_size: '30sp'
         center_x: root.center_x
         top: root.top - self.height
         text: "About"
@@ -116,7 +116,7 @@
             pos: self.pos
 
     Label:
-        font_size: 40  
+        font_size: '30sp'
         center_x: root.center_x - self.width/3
         top: root.top - self.height
         text: "EM-Spectrum"
@@ -129,7 +129,7 @@
         width: root.width/1.1
         text: gi.emText
         pos: (root.center_x - self.width/2, root.center_y - self.height/1.5)
-        font_size: 40
+        font_size: '15sp'
 
 <Sun>:
     canvas:
@@ -140,7 +140,7 @@
             pos: self.pos
 
     Label:
-        font_size: 60  
+        font_size: '30sp'  
         center_x: root.center_x
         top: root.top - self.height
         text: "Sun"
@@ -153,7 +153,7 @@
         width: root.width/1.1
         text: gi.sunText
         pos: (root.center_x - self.width/2, root.center_y - self.height/1.5)
-        font_size: 40
+        font_size: '15sp'
 
 <Albedo>:
     canvas:
@@ -164,7 +164,7 @@
             pos: self.pos
 
     Label:
-        font_size: 60  
+        font_size: '30sp' 
         center_x: root.center_x
         top: root.top - self.height
         text: "Albedo"
@@ -177,7 +177,7 @@
         width: root.width/1.1
         text: gi.albedoText
         pos: (root.center_x - self.width/2, root.center_y - self.height/1.5)
-        font_size: 40
+        font_size: '15sp'
 
 <Colors>:
     canvas:
@@ -188,7 +188,7 @@
             pos: self.pos
 
     Label:
-        font_size: 60  
+        font_size: '30sp'  
         center_x: root.center_x
         top: root.top - self.height
         text: "Colors"
@@ -201,7 +201,7 @@
         width: root.width/1.1
         text: gi.colorsText
         pos: (root.center_x - self.width/2, root.center_y - self.height/1.5)
-        font_size: 40
+        font_size: '15sp'
 
 <Gasses>:
     canvas:
@@ -212,7 +212,7 @@
             pos: self.pos
 
     Label:
-        font_size: 60  
+        font_size: '30sp'  
         center_x: root.center_x
         top: root.top - self.height
         text: "Gasses"
@@ -225,7 +225,7 @@
         width: root.width/1.1
         text: gi.gassesText
         pos: (root.center_x - self.width/2, root.center_y - self.height/1.5)
-        font_size: 40 
+        font_size: '15sp'
 
 <Manager>:
     id: screen_manager
@@ -247,19 +247,19 @@
             text: 'Play Albreakdo!'
             size_hint: (.4, .2)
             pos: (root.center_x - self.width/2, root.center_y + self.height)
-            font_size: 50
+            font_size: '15sp'
             on_release: root.current = 'game';game.play()
         Button:
             text: 'Controls'
             size_hint: (.4, .2)
             pos: (root.center_x - self.width/2, root.center_y - self.height/2)
-            font_size: 50
+            font_size: '15sp'
             on_release: root.current = 'control'
         Button:
             text: 'About'
             size_hint: (.4, .2)
             pos: (root.center_x - self.width/2, root.center_y - self.height * 2)
-            font_size: 50
+            font_size: '15sp'
             on_release: root.current = 'about'
 
     Screen:
@@ -277,7 +277,7 @@
             background_color: (37/255, 150/255, 190/255, 0.7)
             size_hint: (.3, .15)
             pos: (root.center_x + self.width/2, root.center_y + self.height * 2)
-            font_size: 40
+            font_size: '15sp'
             on_release: root.current = 'home'
 
     Screen:
@@ -290,37 +290,37 @@
             background_color: (37/255, 150/255, 190/255, 0.7)
             size_hint: (.3, .15)
             pos: (root.center_x + self.width/2, root.center_y + self.height * 2)
-            font_size: 40
+            font_size: '15sp'
             on_release: root.current = 'home'
         Button:
             text: 'Electromagnetic Spectrum'
             size_hint: (.4, .1)
             pos: (root.center_x - self.width/2, root.center_y + self.height)
-            font_size: 30
+            font_size: '15sp'
             on_release: root.current = 'em'
         Button:
             text: 'Sun'
             size_hint: (.4, .1)
             pos: (root.center_x - self.width/2, root.center_y)
-            font_size: 30
+            font_size: '15sp'
             on_release: root.current = 'sun'
         Button:
             text: 'Albedo'
             size_hint: (.4, .1)
             pos: (root.center_x - self.width/2, root.center_y - self.height)
-            font_size: 30
+            font_size: '15sp'
             on_release: root.current = 'albedo'
         Button:
             text: 'Colors'
             size_hint: (.4, .1)
             pos: (root.center_x - self.width/2, root.center_y - self.height * 2)
-            font_size: 30
+            font_size: '15sp'
             on_release: root.current = 'colors'
         Button:
             text: 'Gasses'
             size_hint: (.4, .1)
             pos: (root.center_x - self.width/2, root.center_y - self.height * 3)
-            font_size: 30
+            font_size: '15sp'
             on_release: root.current = 'gasses'
 
     Screen:
