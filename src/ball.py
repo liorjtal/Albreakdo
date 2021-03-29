@@ -22,3 +22,35 @@ class Ball(Widget):
         add docstring
         """
         self.pos = Vector(*self.velocity) + self.pos
+
+    def is_white(self):
+        """
+        add docstring
+        """
+        if(self.ballR == 255 and self.ballG == 255 and self.ballB == 255):
+            return True
+        return False
+
+    def is_tan(self):
+        """
+        add docstring
+        """
+        if(self.ballR == 210 and self.ballG == 180 and self.ballB == 140):
+            return True
+        return False
+
+    def is_green(self):
+        """
+        add docstring
+        """
+        if(self.ballR == 0 and self.ballG == 255 and self.ballB == 0):
+            return True
+        return False
+
+    def is_blue(self):
+        """
+        add docstring
+        """
+        if(self.ballR == 0 and self.ballG == 0 and self.ballB == 255):
+            return True
+        return False

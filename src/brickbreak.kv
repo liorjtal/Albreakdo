@@ -18,12 +18,27 @@
             pos: self.pos
             size: self.size
 
+<Brick>:
+    size: 150, 40
+    canvas:
+        Color:
+            rgba: (self.brickR/255, self.brickG/255, self.brickB/255, 1)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    Label:
+        font_size: '20sp'
+        center_x: root.center_x
+        center_y: root.center_y
+        text: "CO2"
+
+
 <Game>:
     canvas.before:
         Rectangle:
             size: self.size
             pos: self.pos
-            source: "sky.png"
+            source: "art/sky.png"
         Rectangle:
             size: self.width, 138
             pos: self.pos[0], self.pos[1] + self.height - 138
@@ -43,15 +58,21 @@
 
     ball: bb_ball
     player1: bb_player
+    brick: ghg_brick
     
     Ball:
         id: bb_ball
-        center: self.parent.center
+        center_x: root.center_x - self.width * 3
         
     Paddle:
         id: bb_player
         y: root.y + self.height * 2
         center_x: root.center_x
+
+    Brick:
+        id: ghg_brick
+        center_y: root.center_y
+        center_x: root.center_x - self.width
 
     Label:
         font_size: '30sp'
@@ -242,7 +263,7 @@
             Rectangle:
                 size: self.size
                 pos: self.pos
-                source: "menu.png"
+                source: "art/menu.png"
         Button:
             text: 'Play Albreakdo!'
             size_hint: (.4, .2)

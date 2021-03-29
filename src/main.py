@@ -14,6 +14,7 @@ from ball import Ball
 from screens import (
     Manager, Control, About, ElectroMagneticSpectrum, Sun, Albedo, Colors, Gasses
 )
+from bricks import Brick
 
 class Game(Widget):
     """
@@ -21,6 +22,8 @@ class Game(Widget):
     """
     ball = ObjectProperty(None)
     player1 = ObjectProperty(None)
+    brick = Widget()
+
     canvasOpacity = NumericProperty(0)
 
     #logic/assets inspired by https://github.com/Dirk-Sandberg/2DKivyGame.git
@@ -31,12 +34,12 @@ class Game(Widget):
         super(Game,self).__init__(**kwargs)
 
         # Create textures
-        self.cloud_texture = Image(source="cloud.png").texture
+        self.cloud_texture = Image(source="art/cloud.png").texture
         self.cloud_texture.wrap = 'repeat'
         self.cloud_texture.uvsize = (
             Window.width / self.cloud_texture.width, -1
             )
-        self.sun_texture = Image(source="sun.png").texture
+        self.sun_texture = Image(source="art/sun.png").texture
         self.sun_texture.uvsize = (Window.width / self.sun_texture.width, -1)
 
         button_size = (Window.width/5, Window.height/8)
@@ -71,7 +74,7 @@ class Game(Widget):
         add docstring
         """
         #make ball (ray) come from sun's position
-        self.ball.center = (0.25 * self.center_x, self.center_y + self.center_y/2) 
+        self.ball.center = (0.25 * self.center_x, self.center_y + self.center_y/2)
         self.ball.velocity = vel
         self.ball.ballR = 255
         self.ball.ballG = 0
@@ -93,29 +96,33 @@ class Game(Widget):
 
         #make timer slower or faster based on time left
         #activate a canvas on the screen which makes it redder at each mark
-        if(self.player1.timer >= 80):
+        if self.player1.timer >= 80:
             self.canvasOpacity = 0
             self.player1.timer -= 2 * 0.01
-        elif(self.player1.timer >= 50 and self.player1.timer < 80):
+        elif self.player1.timer >= 50 and self.player1.timer < 80:
             self.player1.timer -= 4 * 0.01
             self.canvasOpacity = 0.2
-        elif(self.player1.timer >= 20 and self.player1.timer < 50):
+        elif self.player1.timer >= 20 and self.player1.timer < 50:
             self.player1.timer -= 6 * 0.01
             self.canvasOpacity = 0.4
-        elif(self.player1.timer > 0 and self.player1.timer < 20):
+        elif self.player1.timer > 0 and self.player1.timer < 20:
             if self.player1.timer < 6 * 0.01:
                 self.player1.timer = 0
                 self.game_over()
             else:
                 self.player1.timer -= 6 * 0.01
                 self.canvasOpacity = 0.6
-        elif(self.player1.timer <= 0):
+        elif self.player1.timer <= 0:
             self.canvasOpacity = 1
             self.player1.timer = 0
             self.game_over()
 
         # bounce off paddles
         self.player1.bounce_ball(self.ball)
+
+        #bounce off bricks
+        if self.brick.check_collision(self.ball) == "ghg":
+            self.remove_widget(self.brick)
 
         # bounce ball off top
         if self.ball.top > self.top:
