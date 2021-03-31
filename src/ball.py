@@ -13,6 +13,8 @@ class Ball(Widget):
     ballG = NumericProperty(0)
     ballB = NumericProperty(0)
 
+    colors = [[255,0,0], [255,255,255], [210,180,140], [0,255,0], [0,0,255]]
+
     velocity_x = NumericProperty(0)
     velocity_y = NumericProperty(0)
     velocity = ReferenceListProperty(velocity_x, velocity_y)
@@ -52,5 +54,13 @@ class Ball(Widget):
         add docstring
         """
         if(self.ballR == 0 and self.ballG == 0 and self.ballB == 255):
+            return True
+        return False
+
+    def is_red(self):
+        """
+        add docstring
+        """
+        if(self.ballR == 255 and self.ballG == 0 and self.ballB == 0):
             return True
         return False

@@ -18,7 +18,7 @@
             pos: self.pos
             size: self.size
 
-<Brick>:
+<CO2Brick>:
     size: 150, 40
     canvas:
         Color:
@@ -30,8 +30,21 @@
         font_size: '20sp'
         center_x: root.center_x
         center_y: root.center_y
-        text: "CO2"
+        text: 'CO2'
 
+<CH4Brick>:
+    size: 150, 40
+    canvas:
+        Color:
+            rgba: (self.brickR/255, self.brickG/255, self.brickB/255, 1)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    Label:
+        font_size: '20sp'
+        center_x: root.center_x
+        center_y: root.center_y
+        text: 'CH4'
 
 <Game>:
     canvas.before:
@@ -58,7 +71,8 @@
 
     ball: bb_ball
     player1: bb_player
-    brick: ghg_brick
+    co2Brick: co2_brick
+    ch4Brick: ch4_brick
     
     Ball:
         id: bb_ball
@@ -69,16 +83,27 @@
         y: root.y + self.height * 2
         center_x: root.center_x
 
-    Brick:
-        id: ghg_brick
-        center_y: root.center_y
+    CO2Brick:
+        id: co2_brick
+        top: root.top - self.height * 2
         center_x: root.center_x - self.width
+
+    CH4Brick:
+        id: ch4_brick
+        top: root.top - self.height * 2
+        center_x: root.center_x + self.width
 
     Label:
         font_size: '30sp'
         center_x: root.center_x
         top: root.top - self.height
         text: "{:.1f}".format(root.player1.timer)
+
+    Label:
+        font_size: '20sp'
+        center_x: root.center_x
+        top: root.top - self.height * 2
+        text: "Radiation: " + str(root.player1.radiation)
 
 <Control>:
     canvas:

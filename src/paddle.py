@@ -8,11 +8,14 @@ class Paddle(Widget):
     """
 
     DURATION = 100
+    RAD = 10
 
     paddleR = NumericProperty(255)
     paddleG = NumericProperty(255)
     paddleB = NumericProperty(255)
     timer = NumericProperty(DURATION)
+    radiation = NumericProperty(RAD)
+
 
     def is_white(self):
         """
@@ -81,23 +84,33 @@ class Paddle(Widget):
         """
         if self.collide_widget(ball):
             vx, vy = ball.velocity
+
             #if paddle is white
-            if self.is_white():
+            if ((self.is_white() and ball.is_white()) or ball.is_red()):
                 vx, vy = self.bounce_white(vx, vy, self.get_collision_point(ball))
+                ball.ballR = self.paddleR
+                ball.ballG = self.paddleG
+                ball.ballB = self.paddleB
             #if paddle is tan
-            elif self.is_tan():
+            elif ((self.is_tan() and ball.is_tan()) or ball.is_red()):
                 vx, vy = self.bounce_tan(vx, vy, self.get_collision_point(ball))
+                ball.ballR = self.paddleR
+                ball.ballG = self.paddleG
+                ball.ballB = self.paddleB
             #if paddle is green
-            elif self.is_green():
+            elif ((self.is_green() and ball.is_green()) or ball.is_red()):
                 vx, vy = self.bounce_green(vx, vy, self.get_collision_point(ball))
+                ball.ballR = self.paddleR
+                ball.ballG = self.paddleG
+                ball.ballB = self.paddleB
             #if paddle is blue
-            elif self.is_blue():
+            elif ((self.is_blue() and ball.is_blue()) or ball.is_red()):
                 vx, vy = self.bounce_blue(vx, vy, self.get_collision_point(ball))
+                ball.ballR = self.paddleR
+                ball.ballG = self.paddleG
+                ball.ballB = self.paddleB
             #change ball color and velocity to match paddle hit
             ball.velocity = vx, vy
-            ball.ballR = self.paddleR
-            ball.ballG = self.paddleG
-            ball.ballB = self.paddleB
 
     def get_collision_point(self, ball):
         if ball.x < self.center_x - self.width/3:

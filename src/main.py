@@ -14,7 +14,8 @@ from ball import Ball
 from screens import (
     Manager, Control, About, ElectroMagneticSpectrum, Sun, Albedo, Colors, Gasses
 )
-from bricks import Brick
+from bricks import CO2Brick, CH4Brick
+import random
 
 class Game(Widget):
     """
@@ -22,7 +23,8 @@ class Game(Widget):
     """
     ball = ObjectProperty(None)
     player1 = ObjectProperty(None)
-    brick = Widget()
+    co2Brick = ObjectProperty(None)
+    ch4Brick = ObjectProperty(None)
 
     canvasOpacity = NumericProperty(0)
 
@@ -73,12 +75,20 @@ class Game(Widget):
         """
         add docstring
         """
-        #make ball (ray) come from sun's position
+        #serve a random colored ball from sun's position
         self.ball.center = (0.25 * self.center_x, self.center_y + self.center_y/2)
         self.ball.velocity = vel
-        self.ball.ballR = 255
-        self.ball.ballG = 0
-        self.ball.ballB = 0
+        col = random.randint(0, 4)
+        self.ball.ballR = self.ball.colors[col][0]
+        self.ball.ballG = self.ball.colors[col][1]
+        self.ball.ballB = self.ball.colors[col][2]
+
+    def move_bricks(self, vel=(4, 0)):
+        """
+        add docstring
+        """
+        self.co2Brick.velocity = vel
+        self.ch4Brick.velocity = vel
 
     def update(self, dt):
         """
@@ -93,6 +103,8 @@ class Game(Widget):
         texture.dispatch(self)
 
         self.ball.move()
+        self.co2Brick.move(dt)
+        self.ch4Brick.move(dt)
 
         #make timer slower or faster based on time left
         #activate a canvas on the screen which makes it redder at each mark
@@ -121,12 +133,16 @@ class Game(Widget):
         self.player1.bounce_ball(self.ball)
 
         #bounce off bricks
-        if self.brick.check_collision(self.ball) == "ghg":
-            self.remove_widget(self.brick)
+        if self.co2Brick.co2_collision(self.ball) == "co2":
+            self.player1.timer -= 2
+        if self.ch4Brick.ch4_collision(self.ball) == "ch4":
+            self.player1.timer -= 2
 
-        # bounce ball off top
+        # remove ball off top
         if self.ball.top > self.top:
-            self.ball.velocity_y *= -1
+            self.player1.radiation -= 1
+            self.player1.timer += 10
+            self.serve_ball()
 
         # bounce off sides
         if self.ball.x < self.x:
@@ -134,13 +150,28 @@ class Game(Widget):
         if self.ball.x > self.width:
             self.ball.velocity_x *= -1
 
+        #gradually increase brick speed while moving back and forth
+        if self.co2Brick.x < self.x:
+            self.co2Brick.velocity_x *= -1 * 1.05
+
+        if self.co2Brick.x > self.width:
+            self.co2Brick.velocity_x *= -1 * 1.05
+
+        if self.ch4Brick.x < self.x:
+            self.ch4Brick.velocity_x *= -1 * 1.05
+
+        if self.ch4Brick.x > self.width:
+            self.ch4Brick.velocity_x *= -1 * 1.05
+
         # went off bottom
         if self.ball.y < self.y:
+            self.player1.timer -= 2
             self.serve_ball()
 
     def play(self):
         self.reset()
         self.serve_ball()
+        self.move_bricks()
         Clock.schedule_interval(self.update, 1.0 / 60.0)
 
     def game_over(self):
@@ -162,6 +193,7 @@ class Game(Widget):
         self.remove_widget(self.menu_button)
         Clock.unschedule(self.update)
         self.player1.timer = self.player1.DURATION
+        self.player1.radiation = self.player1.RAD
 
 class BrickBreakApp(App):
     """
