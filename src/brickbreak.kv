@@ -19,7 +19,7 @@
             size: self.size
 
 <CO2Brick>:
-    size: 150, 40
+    size: 150, 50
     canvas:
         Color:
             rgba: (self.brickR/255, self.brickG/255, self.brickB/255, 1)
@@ -33,7 +33,7 @@
         text: 'CO2'
 
 <CH4Brick>:
-    size: 150, 40
+    size: 150, 50
     canvas:
         Color:
             rgba: (self.brickR/255, self.brickG/255, self.brickB/255, 1)
@@ -85,13 +85,13 @@
 
     CO2Brick:
         id: co2_brick
-        top: root.top - self.height * 2
-        center_x: root.center_x - self.width
+        top: root.top - self.height
+        center_x: root.center_x - self.width * 3
 
     CH4Brick:
         id: ch4_brick
-        top: root.top - self.height * 2
-        center_x: root.center_x + self.width
+        top: root.top - self.height
+        center_x: root.center_x - self.width * 1.5
 
     Label:
         font_size: '30sp'
@@ -312,6 +312,15 @@
         name: 'game'
         Game:
             id: game
+
+        Button:
+            text: 'Pause'
+            rgba: (37/255, 150/255, 190/255, 0.5)
+            background_color: (37/255, 150/255, 190/255, 0.5)
+            size_hint: (0.05, 0.05)
+            pos: 115, root.top - 205
+            font_size: '10sp'
+            on_release: root.current = 'game';game.pause()
 
     Screen:
         name: 'control'

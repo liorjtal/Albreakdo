@@ -8,7 +8,7 @@ class Paddle(Widget):
     """
 
     DURATION = 100
-    RAD = 10
+    RAD = 5
 
     paddleR = NumericProperty(255)
     paddleG = NumericProperty(255)

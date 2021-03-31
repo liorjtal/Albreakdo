@@ -11,8 +11,8 @@ class CO2Brick(Widget):
     """
 
     speedRate = 2
-    minSpeed = 8
-    maxSpeed = 16
+    minSpeed = 6
+    maxSpeed = 12
 
     brickR = NumericProperty(100)
     brickG = NumericProperty(150)

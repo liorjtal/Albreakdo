@@ -1,5 +1,6 @@
 from kivy.app import App
 from kivy.uix.widget import Widget
+from kivy.uix.label import Label
 from kivy.uix.image import Image
 from kivy.uix.button import Button
 from kivy.core.window import Window
@@ -25,6 +26,7 @@ class Game(Widget):
     player1 = ObjectProperty(None)
     co2Brick = ObjectProperty(None)
     ch4Brick = ObjectProperty(None)
+    paused = False
 
     canvasOpacity = NumericProperty(0)
 
@@ -44,16 +46,21 @@ class Game(Widget):
         self.sun_texture = Image(source="art/sun.png").texture
         self.sun_texture.uvsize = (Window.width / self.sun_texture.width, -1)
 
-        button_size = (Window.width/5, Window.height/8)
+        button_size = (275, 50)
         self.restart_button = Button(
-            pos = (Window.width*0.4, self.center_y + self.height * 2.5),
+            pos = (Window.width*0.7, self.center_y + self.height * 4),
             size = button_size, text='Try Again',
             on_release=self.restart
         )
         self.menu_button = Button(
-            pos = (Window.width*0.4, self.center_y + self.height * 1.5),
+            pos = (Window.width*0.4, self.center_y + self.height * 4),
             size = button_size, text='Back to Main Menu',
             on_release=self.change_screen
+        )
+        self.resume_button = Button(
+            pos = (Window.width*0.1, self.center_y + self.height * 4),
+            size = button_size, text='Resume',
+            on_release=self.resume
         )
 
     def on_touch_move(self, touch):
@@ -124,10 +131,9 @@ class Game(Widget):
             else:
                 self.player1.timer -= 6 * 0.01
                 self.canvasOpacity = 0.6
-        elif self.player1.timer <= 0:
-            self.canvasOpacity = 1
-            self.player1.timer = 0
-            self.game_over()
+
+        if self.player1.radiation <= 0:
+            self.win_game()
 
         # bounce off paddles
         self.player1.bounce_ball(self.ball)
@@ -174,11 +180,31 @@ class Game(Widget):
         self.move_bricks()
         Clock.schedule_interval(self.update, 1.0 / 60.0)
 
+    def pause(self):
+        if not self.paused:
+            self.paused = True
+            Clock.unschedule(self.update)
+            self.add_widget(self.resume_button)
+            self.add_widget(self.restart_button)
+            self.add_widget(self.menu_button)
+
+    def resume(self, instance):
+        self.paused = False
+        Clock.schedule_interval(self.update, 1.0 / 60.0)
+        self.remove_widget(self.resume_button)
+        self.remove_widget(self.restart_button)
+        self.remove_widget(self.menu_button)
+
     def game_over(self):
+        Clock.unschedule(self.update)
         self.remove_widget(self.restart_button)
         self.remove_widget(self.menu_button)
         self.add_widget(self.restart_button)
         self.add_widget(self.menu_button)
+
+    def win_game(self):
+        Clock.unschedule(self.update)
+        print("win")
 
     def restart(self, instance):
         self.reset()
@@ -189,6 +215,8 @@ class Game(Widget):
         sm.current = 'home'
 
     def reset(self):
+        self.paused = False
+        self.remove_widget(self.resume_button)
         self.remove_widget(self.restart_button)
         self.remove_widget(self.menu_button)
         Clock.unschedule(self.update)
