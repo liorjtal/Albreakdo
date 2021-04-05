@@ -7,7 +7,7 @@ from kivy.properties import (
 
 class CO2Brick(Widget):
     """
-    Carbon Dioxide
+    Carbon Dioxide brick with its own speed
     """
 
     speedRate = 2
@@ -24,7 +24,7 @@ class CO2Brick(Widget):
 
     def co2_collision(self, ball):
         """
-        ball destroy brick based on color of ball.
+        reverse ball y velocity and return if collided with ghg
         """
         if self.collide_widget(ball):
             vx, vy = ball.velocity
@@ -36,7 +36,7 @@ class CO2Brick(Widget):
 
     def is_ghg(self):
         """
-        add docstring
+        check if ball is ghg
         """
         if(self.brickR == 100 and self.brickG == 100 and self.brickB == 100):
             return True
@@ -44,15 +44,21 @@ class CO2Brick(Widget):
 
     def move(self, dt):
         """
-        add docstring
+        move ghg brick
         """
         self.speed_up(dt)
         self.pos = Vector(*self.velocity) + self.pos
 
     def apply_speed_rate(self, dt):
+        """
+        speed rate for moving ghg brick
+        """
         self.velocity_x += self.speedRate * dt
 
     def speed_up(self, dt):
+        """
+        speed up ghg brick movement
+        """
             #if we exceed the defined range then correct the sign of speedRate.
         if self.velocity_x < self.minSpeed:
             self.speedRate = abs(self.speedRate)
@@ -63,7 +69,7 @@ class CO2Brick(Widget):
 
 class CH4Brick(Widget):
     """
-    Carbon Dioxide
+    Methane brick with its own speed
     """
 
     speedRate = 2
@@ -80,7 +86,7 @@ class CH4Brick(Widget):
 
     def ch4_collision(self, ball):
         """
-        ball destroy brick based on color of ball.
+        reverse ball y velocity and return if collided with ghg
         """
         if self.collide_widget(ball):
             vx, vy = ball.velocity
@@ -92,7 +98,7 @@ class CH4Brick(Widget):
 
     def is_ghg(self):
         """
-        add docstring
+        check if brick is ghg
         """
         if(self.brickR == 100 and self.brickG == 100 and self.brickB == 100):
             return True
@@ -100,16 +106,22 @@ class CH4Brick(Widget):
 
     def move(self, dt):
         """
-        add docstring
+        move ghg brick
         """
         self.speed_up(dt)
         self.pos = Vector(*self.velocity) + self.pos
 
     def apply_speed_rate(self, dt):
+        """
+        speed rate for moving ghg brick
+        """
         self.velocity_x += self.speedRate * dt
 
     def speed_up(self, dt):
-            #if we exceed the defined range then correct the sign of speedRate.
+        """
+        speed up ghg brick movement
+        """
+        #if we exceed the defined range then correct the sign of speedRate.
         if self.velocity_x < self.minSpeed:
             self.speedRate = abs(self.speedRate)
         elif self.velocity_x > self.maxSpeed:

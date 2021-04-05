@@ -6,7 +6,7 @@ from kivy.vector import Vector
 
 class Ball(Widget):
     """
-    add docstring
+    widget for ball containing color and velocity properties
     """
 
     ballR = NumericProperty(255)
@@ -21,13 +21,13 @@ class Ball(Widget):
 
     def move(self):
         """
-        add docstring
+        move ball through space based on velocity
         """
         self.pos = Vector(*self.velocity) + self.pos
 
     def is_white(self):
         """
-        add docstring
+        check if ball is white
         """
         if(self.ballR == 255 and self.ballG == 255 and self.ballB == 255):
             return True
@@ -35,7 +35,7 @@ class Ball(Widget):
 
     def is_tan(self):
         """
-        add docstring
+        check if ball is tan
         """
         if(self.ballR == 210 and self.ballG == 180 and self.ballB == 140):
             return True
@@ -43,7 +43,7 @@ class Ball(Widget):
 
     def is_green(self):
         """
-        add docstring
+        check if ball is green
         """
         if(self.ballR == 0 and self.ballG == 255 and self.ballB == 0):
             return True
@@ -51,7 +51,7 @@ class Ball(Widget):
 
     def is_blue(self):
         """
-        add docstring
+        check if ball is blue
         """
         if(self.ballR == 0 and self.ballG == 0 and self.ballB == 255):
             return True
@@ -59,7 +59,7 @@ class Ball(Widget):
 
     def is_red(self):
         """
-        add docstring
+        check if ball is red
         """
         if(self.ballR == 255 and self.ballG == 0 and self.ballB == 0):
             return True

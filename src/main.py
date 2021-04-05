@@ -20,7 +20,8 @@ import random
 
 class Game(Widget):
     """
-    add docstring
+    Main game code containing bricks, player paddle, ball, background
+    textures, and update function for logic.
     """
     ball = ObjectProperty(None)
     player1 = ObjectProperty(None)
@@ -65,7 +66,7 @@ class Game(Widget):
 
     def on_touch_move(self, touch):
         """
-        add docstring
+        touch controls for paddle position
         """
         if touch.x < self.width / 2:
             self.player1.center_x = touch.x
@@ -74,13 +75,14 @@ class Game(Widget):
 
     def on_size(self, *args):
         """
-        add docstring
+        make clouds approrpiate size for screen
         """
         self.cloud_texture.uvsize = (self.width / self.cloud_texture.width, -1)
 
     def serve_ball(self, vel=(2, -5)):
         """
-        add docstring
+        serve ball from sun's location at velocity set by parameter vel
+        ball color is random every serve
         """
         #serve a random colored ball from sun's position
         self.ball.center = (0.25 * self.center_x, self.center_y + self.center_y/2)
@@ -92,14 +94,14 @@ class Game(Widget):
 
     def move_bricks(self, vel=(4, 0)):
         """
-        add docstring
+        move bricks at velocity set by parameter vel
         """
         self.co2Brick.velocity = vel
         self.ch4Brick.velocity = vel
 
     def update(self, dt):
         """
-        add docstring
+        update function providing game logic at dt FPS
         """
 
         # Update the uvpos of the texture
@@ -109,6 +111,7 @@ class Game(Widget):
         texture = self.property('cloud_texture')
         texture.dispatch(self)
 
+        #move ball and bricks
         self.ball.move()
         self.co2Brick.move(dt)
         self.ch4Brick.move(dt)
@@ -138,16 +141,16 @@ class Game(Widget):
         # bounce off paddles
         self.player1.bounce_ball(self.ball)
 
-        #bounce off bricks
-        if self.co2Brick.co2_collision(self.ball) == "co2":
-            self.player1.timer -= 2
-        if self.ch4Brick.ch4_collision(self.ball) == "ch4":
-            self.player1.timer -= 2
+        #bounce off bricks. each collision with ghg removes 5 seconds
+        if self.co2Brick.co2_collision(self.ball) == "co2" and self.player1.timer >= 5:
+            self.player1.timer -= 5
+        if self.ch4Brick.ch4_collision(self.ball) == "ch4" and self.player1.timer >= 5:
+            self.player1.timer -= 5
 
-        # remove ball off top
-        if self.ball.top > self.top:
+        # remove ball off top. each successfully reflected ball adds 5 seconds
+        if self.ball.top > self.top and self.player1.timer > 0:
             self.player1.radiation -= 1
-            self.player1.timer += 10
+            self.player1.timer += 5
             self.serve_ball()
 
         # bounce off sides
@@ -169,18 +172,24 @@ class Game(Widget):
         if self.ch4Brick.x > self.width:
             self.ch4Brick.velocity_x *= -1 * 1.05
 
-        # went off bottom
-        if self.ball.y < self.y:
-            self.player1.timer -= 2
+        # went off bottom. each missed ball removes 5 seconds
+        if self.ball.y < self.y and self.player1.timer >= 5:
+            self.player1.timer -= 5
             self.serve_ball()
 
     def play(self):
+        """
+        begins the game and starts update function
+        """
         self.reset()
         self.serve_ball()
         self.move_bricks()
         Clock.schedule_interval(self.update, 1.0 / 60.0)
 
     def pause(self):
+        """
+        stops the update function and brings up menu
+        """
         if not self.paused:
             self.paused = True
             Clock.unschedule(self.update)
@@ -189,6 +198,9 @@ class Game(Widget):
             self.add_widget(self.menu_button)
 
     def resume(self, instance):
+        """
+        resumes the update function and removes menu
+        """
         self.paused = False
         Clock.schedule_interval(self.update, 1.0 / 60.0)
         self.remove_widget(self.resume_button)
@@ -196,6 +208,9 @@ class Game(Widget):
         self.remove_widget(self.menu_button)
 
     def game_over(self):
+        """
+        stops the update function and brings up menu
+        """
         Clock.unschedule(self.update)
         self.remove_widget(self.restart_button)
         self.remove_widget(self.menu_button)
@@ -203,18 +218,31 @@ class Game(Widget):
         self.add_widget(self.menu_button)
 
     def win_game(self):
+        """
+        stops the update function and brings up menu
+        """
         Clock.unschedule(self.update)
-        print("win")
+        self.add_widget(self.restart_button)
+        self.add_widget(self.menu_button)
 
     def restart(self, instance):
+        """
+        resets the update function and plays game
+        """
         self.reset()
         self.play()
 
     def change_screen(self, instance):
+        """
+        back to main menu
+        """
         sm = self.parent.parent
         sm.current = 'home'
 
     def reset(self):
+        """
+        resets the update function and removes menu
+        """
         self.paused = False
         self.remove_widget(self.resume_button)
         self.remove_widget(self.restart_button)
@@ -225,12 +253,12 @@ class Game(Widget):
 
 class BrickBreakApp(App):
     """
-    add docstring
+    main app with build function
     """
 
     def build(self):
         """
-        add docstring
+        builds the app
         """
         return Manager(transition=WipeTransition())
 

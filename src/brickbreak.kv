@@ -127,15 +127,21 @@
         text: "Controls"
 
     Label:
-        font_size: '20sp'
+        font_size: '24sp'
         center_x: root.center_x
         center_y: root.center_y + self.height
         text: 'Touch the screen to move the paddle\nTouch the paddle to change paddle colors'
 
     Label:
-        font_size: '50sp'  
-        center_x: root.center_x - self.height/2
+        font_size: '20sp'
+        center_x: root.center_x
         center_y: root.center_y - self.height/2
+        text: 'Balls must be reflected by paddles of the same color\nRed balls can be reflected off any paddle'
+
+    Label:
+        font_size: '40sp'  
+        center_x: root.center_x
+        center_y: root.center_y - self.height * 2
         text: '[b]Try it out![/b]'
         markup: True
 

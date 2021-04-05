@@ -4,7 +4,7 @@ from kivy.uix.screenmanager import ScreenManager
 
 class Control(Widget):
     """
-    add docstring
+    control screen
     """
     player1 = ObjectProperty(None)
 
@@ -19,35 +19,35 @@ class Control(Widget):
 
 class About(Widget):
     """
-    add docstring
+    about screen
     """
 
 class ElectroMagneticSpectrum(Widget):
     """
-    add docstring
+    em screen
     """
 
 class Sun(Widget):
     """
-    add docstring
+    sun screen
     """
 
 class Albedo(Widget):
     """
-    add docstring
+    albedo screen
     """
 
 class Colors(Widget):
     """
-    add docstring
+    colors screen
     """
 
 class Gasses(Widget):
     """
-    add docstring
+    gasses screen
     """
 
 class Manager(ScreenManager):
     """
-    add docstring
+    screen manager
     """

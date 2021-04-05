@@ -1,5 +1,3 @@
-
-
 emText = '''The electromagnetic spectrum represents the range of types \
 of Electromagnetic radiation. Radiation is energy that can travel and \
 spread. For example, visible light from a lamp, and radio waves from a radio \
