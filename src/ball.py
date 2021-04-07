@@ -25,6 +25,19 @@ class Ball(Widget):
         """
         self.pos = Vector(*self.velocity) + self.pos
 
+    def is_colliding(self,target):
+        """
+        determine if ball is colliding with something and where
+        """
+        #check left edges in relation to one another
+        if self.x > target.x + target.width or target.x > self.x + self.width:
+            return False
+        #check bottom edges in relation to one another
+        if self.y > target.y + target.height or target.y > self.y + self.height:
+            return False
+
+        return True
+
     def is_white(self):
         """
         check if ball is white

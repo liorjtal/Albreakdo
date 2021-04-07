@@ -15,7 +15,7 @@ from ball import Ball
 from screens import (
     Manager, Control, About, ElectroMagneticSpectrum, Sun, Albedo, Colors, Gasses
 )
-from bricks import CO2Brick, CH4Brick
+from bricks import CO2, CH4
 import random
 
 class Game(Widget):
@@ -25,8 +25,8 @@ class Game(Widget):
     """
     ball = ObjectProperty(None)
     player1 = ObjectProperty(None)
-    co2Brick = ObjectProperty(None)
-    ch4Brick = ObjectProperty(None)
+    co2 = ObjectProperty(None)
+    ch4 = ObjectProperty(None)
     paused = False
 
     canvasOpacity = NumericProperty(0)
@@ -92,12 +92,17 @@ class Game(Widget):
         self.ball.ballG = self.ball.colors[col][1]
         self.ball.ballB = self.ball.colors[col][2]
 
-    def move_bricks(self, vel=(4, 0)):
+    def move_co2(self, vel=(4, 0)):
         """
-        move bricks at velocity set by parameter vel
+        move co2 brick at velocity set by parameter vel
         """
-        self.co2Brick.velocity = vel
-        self.ch4Brick.velocity = vel
+        self.co2.velocity = vel
+
+    def move_ch4(self, vel=(8, 0)):
+        """
+        move ch4 brick at velocity set by parameter vel
+        """
+        self.ch4.velocity = vel
 
     def update(self, dt):
         """
@@ -113,8 +118,8 @@ class Game(Widget):
 
         #move ball and bricks
         self.ball.move()
-        self.co2Brick.move(dt)
-        self.ch4Brick.move(dt)
+        self.co2.move(dt)
+        self.ch4.move(dt)
 
         #make timer slower or faster based on time left
         #activate a canvas on the screen which makes it redder at each mark
@@ -142,9 +147,9 @@ class Game(Widget):
         self.player1.bounce_ball(self.ball)
 
         #bounce off bricks. each collision with ghg removes 5 seconds
-        if self.co2Brick.co2_collision(self.ball) == "co2" and self.player1.timer >= 5:
+        if self.co2.co2_collision(self.ball) == "co2" and self.player1.timer >= 5:
             self.player1.timer -= 5
-        if self.ch4Brick.ch4_collision(self.ball) == "ch4" and self.player1.timer >= 5:
+        if self.ch4.ch4_collision(self.ball) == "ch4" and self.player1.timer >= 5:
             self.player1.timer -= 5
 
         # remove ball off top. each successfully reflected ball adds 5 seconds
@@ -160,17 +165,17 @@ class Game(Widget):
             self.ball.velocity_x *= -1
 
         #gradually increase brick speed while moving back and forth
-        if self.co2Brick.x < self.x:
-            self.co2Brick.velocity_x *= -1 * 1.05
+        if self.co2.x < self.x:
+            self.co2.velocity_x *= -1 * 1.05
 
-        if self.co2Brick.x > self.width:
-            self.co2Brick.velocity_x *= -1 * 1.05
+        if self.co2.x > self.width:
+            self.co2.velocity_x *= -1 * 1.05
 
-        if self.ch4Brick.x < self.x:
-            self.ch4Brick.velocity_x *= -1 * 1.05
+        if self.ch4.x < self.x:
+            self.ch4.velocity_x *= -1 * 1.05
 
-        if self.ch4Brick.x > self.width:
-            self.ch4Brick.velocity_x *= -1 * 1.05
+        if self.ch4.x > self.width:
+            self.ch4.velocity_x *= -1 * 1.05
 
         # went off bottom. each missed ball removes 5 seconds
         if self.ball.y < self.y and self.player1.timer >= 5:
@@ -183,7 +188,8 @@ class Game(Widget):
         """
         self.reset()
         self.serve_ball()
-        self.move_bricks()
+        self.move_co2()
+        self.move_ch4()
         Clock.schedule_interval(self.update, 1.0 / 60.0)
 
     def pause(self):

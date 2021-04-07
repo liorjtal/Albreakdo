@@ -82,7 +82,7 @@ class Paddle(Widget):
         """
         ball direction & velocity based on point of contact & color  of paddle.
         """
-        if self.collide_widget(ball):
+        if ball.is_colliding(self):
             vx, vy = ball.velocity
 
             #if paddle is white

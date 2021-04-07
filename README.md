@@ -2,11 +2,11 @@
 
 My program is a brick-break style game that teaches the user important fundamental concepts in the field of environmental science relating to albedo and climate change.
 
-Mechanics still missing:
+Still missing:
 
 - music
 - settings (set radiation and timer before playing)
-- custom collision script
+- mobile testing
 
 ### In Development
 

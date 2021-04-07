@@ -18,11 +18,11 @@
             pos: self.pos
             size: self.size
 
-<CO2Brick>:
+<CO2>:
     size: 150, 50
     canvas:
         Color:
-            rgba: (self.brickR/255, self.brickG/255, self.brickB/255, 1)
+            rgba: (self.gasR/255, self.gasG/255, self.gasB/255, 1)
         Rectangle:
             pos: self.pos
             size: self.size
@@ -32,11 +32,11 @@
         center_y: root.center_y
         text: 'CO2'
 
-<CH4Brick>:
+<CH4>:
     size: 150, 50
     canvas:
         Color:
-            rgba: (self.brickR/255, self.brickG/255, self.brickB/255, 1)
+            rgba: (self.gasR/255, self.gasG/255, self.gasB/255, 1)
         Rectangle:
             pos: self.pos
             size: self.size
@@ -71,8 +71,8 @@
 
     ball: bb_ball
     player1: bb_player
-    co2Brick: co2_brick
-    ch4Brick: ch4_brick
+    co2: co2_brick
+    ch4: ch4_brick
     
     Ball:
         id: bb_ball
@@ -83,12 +83,12 @@
         y: root.y + self.height * 2
         center_x: root.center_x
 
-    CO2Brick:
+    CO2:
         id: co2_brick
         top: root.top - self.height
         center_x: root.center_x - self.width * 3
 
-    CH4Brick:
+    CH4:
         id: ch4_brick
         top: root.top - self.height
         center_x: root.center_x - self.width * 1.5
