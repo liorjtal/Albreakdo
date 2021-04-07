@@ -38,7 +38,7 @@ class CO2Brick(Widget):
         """
         check if ball is ghg
         """
-        if(self.brickR == 100 and self.brickG == 100 and self.brickB == 100):
+        if(self.brickR == 100 and self.brickG == 150 and self.brickB == 150):
             return True
         return False
 
@@ -100,7 +100,7 @@ class CH4Brick(Widget):
         """
         check if brick is ghg
         """
-        if(self.brickR == 100 and self.brickG == 100 and self.brickB == 100):
+        if(self.brickR == 100 and self.brickG == 150 and self.brickB == 150):
             return True
         return False
 

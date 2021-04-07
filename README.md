@@ -4,11 +4,9 @@ My program is a brick-break style game that teaches the user important fundament
 
 Mechanics still missing:
 
-- Pause menu, reset button, game over
-- Breakable blocks each with own color
-- Breaking a color brick with the same color ball adds more time to timer
-- Some breakable blocks will represent greenhouse gas blocks
-- Greenhouse blocks that are destroyed speed up the timer
+- music
+- settings (set radiation and timer before playing)
+- custom collision script
 
 ### In Development
 
