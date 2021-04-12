@@ -9,6 +9,7 @@ from kivy.properties import (
     NumericProperty, ObjectProperty
 )
 from kivy.uix.screenmanager import WipeTransition
+from kivy.core.audio import SoundLoader
 from buttons import AboutButton
 from paddle import Paddle
 from ball import Ball
@@ -266,6 +267,11 @@ class BrickBreakApp(App):
         """
         builds the app
         """
+        music = SoundLoader.load("sound/PatakasWorld.wav")
+        music.loop = True
+        music.volume = 0.03
+        if music:
+            music.play()
         return Manager(transition=WipeTransition())
 
 if __name__ == '__main__':
