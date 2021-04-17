@@ -255,8 +255,8 @@ class Game(Widget):
         self.remove_widget(self.restart_button)
         self.remove_widget(self.menu_button)
         Clock.unschedule(self.update)
-        self.player1.timer = self.player1.DURATION
-        self.player1.radiation = self.player1.RAD
+        self.player1.timer = self.player1.duration
+        self.player1.radiation = self.player1.radiation
 
 class BrickBreakApp(App):
     """

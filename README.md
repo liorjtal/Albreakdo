@@ -4,9 +4,8 @@ My program is a brick-break style game that teaches the user important fundament
 
 Still missing:
 
-- music
-- settings (set radiation and timer before playing)
-- mobile testing
+- fix slider
+- mobile testing (following instructions at https://kivy.org/doc/stable/guide/packaging-ios.html?highlight=xcode)
 
 ### In Development
 

@@ -1,20 +1,21 @@
 from kivy.uix.widget import Widget
 from kivy.properties import NumericProperty
 from kivy.vector import Vector
+from screens import Manager
 
 class Paddle(Widget):
     """
     Player's avatar. Contains color, timer, and radiation properties
     """
 
-    DURATION = 100
-    RAD = 10
+    duration = 100
+    radiation = 10
 
     paddleR = NumericProperty(255)
     paddleG = NumericProperty(255)
     paddleB = NumericProperty(255)
-    timer = NumericProperty(DURATION)
-    radiation = NumericProperty(RAD)
+    timer = NumericProperty(duration)
+    radiation = NumericProperty(radiation)
 
 
     def is_white(self):
