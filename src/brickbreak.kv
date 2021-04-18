@@ -317,7 +317,7 @@
             orientation: 'vertical'
             size_hint: (0.4, 0.2)
             Slider:
-                id: durationSlider
+                id: slider1
                 min: 100
                 max: 150
                 step: 5
@@ -325,10 +325,10 @@
                 value_track_color: [0, 1, 0, 1]
 
             Label:
-                text: "Duration: " + str(durationSlider.value)
+                text: "Duration: " + str(slider1.value)
 
             Slider:
-                id: radiationSlider
+                id: slider2
                 min: 5
                 max: 15
                 step: 1
@@ -336,7 +336,7 @@
                 value_track_color: [1, 0, 0, 1]
 
             Label:
-                text: "Radiation: " + str(radiationSlider.value)
+                text: "Radiation: " + str(slider2.value)
 
     Screen:
         name: 'game'

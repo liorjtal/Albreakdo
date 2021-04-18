@@ -9,6 +9,7 @@ class Paddle(Widget):
     """
 
     duration = 100
+    #Manager.durationSlider.value reference not working!
     radiation = 10
 
     paddleR = NumericProperty(255)

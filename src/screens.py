@@ -10,7 +10,7 @@ class Control(Widget):
 
     def on_touch_move(self, touch):
         """
-        add docstring
+        move paddle
         """
         if touch.x < self.width / 2:
             self.player1.center_x = touch.x
