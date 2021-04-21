@@ -1,7 +1,7 @@
 from kivy.uix.widget import Widget
 from kivy.properties import NumericProperty
 from kivy.vector import Vector
-from screens import Manager
+
 
 class Paddle(Widget):
     """
@@ -9,8 +9,13 @@ class Paddle(Widget):
     """
 
     duration = 100
-    #Manager.durationSlider.value reference not working!
     radiation = 10
+
+    # def get_slider1_value():
+    #     return App.get_running_app().root.ids.slider1.value
+
+    # def get_slider2_value():
+    #     return App.get_running_app().root.ids.slider2.value
 
     paddleR = NumericProperty(255)
     paddleG = NumericProperty(255)

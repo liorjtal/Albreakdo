@@ -4,7 +4,7 @@ My program is a brick-break style game that teaches the user important fundament
 
 Still missing:
 
-- fix slider
+- fix slider to set values for game (currently have a stackoverflow discussion on bug: https://stackoverflow.com/questions/67157040/kivy-slider-value/67184084?noredirect=1#comment118775193_67184084)
 - mobile testing (following instructions at https://kivy.org/doc/stable/guide/packaging-ios.html?highlight=xcode)
 
 ### In Development
