@@ -28,7 +28,6 @@ class CO2(Widget):
             if self.is_ghg():
                 vx, vy = self.bounce_ball(vx, vy, self.get_collision_point(ball))
                 ball.velocity = vx, vy
-                return "co2"
 
     def get_collision_point(self, ball):
         """
@@ -79,10 +78,6 @@ class CH4(Widget):
     Methane object with its own speed
     """
 
-    speedRate = 2
-    minSpeed = 3
-    maxSpeed = 15
-
     gasR = NumericProperty(100)
     gasG = NumericProperty(150)
     gasB = NumericProperty(150)
@@ -101,7 +96,6 @@ class CH4(Widget):
             if self.is_ghg():
                 vx, vy = self.bounce_ball(vx, vy, self.get_collision_point(ball))
                 ball.velocity = vx, vy
-                return "ch4"
 
     def get_collision_point(self, ball):
         """
@@ -145,22 +139,4 @@ class CH4(Widget):
         """
         move ghg brick
         """
-        self.speed_up(dt)
         self.pos = Vector(*self.velocity) + self.pos
-
-    def apply_speed_rate(self, dt):
-        """
-        speed rate for moving ghg brick
-        """
-        self.velocity_x += self.speedRate * dt
-
-    def speed_up(self, dt):
-        """
-        speed up ghg brick movement
-        """
-        #if we exceed the defined range then correct the sign of speedRate.
-        if self.velocity_x < self.minSpeed:
-            self.speedRate = abs(self.speedRate)
-        elif self.velocity_x > self.maxSpeed:
-            self.speedRate = -abs(self.speedRate)
-        self.apply_speed_rate(dt)

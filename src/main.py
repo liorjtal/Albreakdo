@@ -122,41 +122,35 @@ class Game(Widget):
         self.co2.move(dt)
         self.ch4.move(dt)
 
-        #make timer slower or faster based on time left
-        #activate a canvas on the screen which makes it redder at each mark
-        if self.player1.timer >= 80:
-            self.canvasOpacity = 0
-            self.player1.timer -= 2 * 0.01
-        elif self.player1.timer >= 50 and self.player1.timer < 80:
-            self.player1.timer -= 4 * 0.01
-            self.canvasOpacity = 0.2
-        elif self.player1.timer >= 20 and self.player1.timer < 50:
-            self.player1.timer -= 6 * 0.01
-            self.canvasOpacity = 0.4
-        elif self.player1.timer > 0 and self.player1.timer < 20:
-            if self.player1.timer < 6 * 0.01:
-                self.player1.timer = 0
-                self.game_over()
-            else:
-                self.player1.timer -= 6 * 0.01
-                self.canvasOpacity = 0.6
+        #update timer
+        self.player1.timer -= dt
 
-        if self.player1.radiation <= 0:
+        #activate a canvas on the screen which makes it redder at each mark
+        if self.player1.timer >= self.player1.duration * 0.75:
+            self.canvasOpacity = 0
+        elif self.player1.timer >= self.player1.duration * 0.5 and self.player1.timer < self.player1.duration * 0.75:
+            self.canvasOpacity = 0.2
+        elif self.player1.timer >= self.player1.duration * 0.25 and self.player1.timer < self.player1.duration * 0.5:
+            self.canvasOpacity = 0.4
+        elif self.player1.timer > 0 and self.player1.timer < self.player1.duration * 0.25:
+            self.canvasOpacity = 0.6
+        elif self.player1.timer <= 0:
+            self.player1.timer = 0
+            self.game_over()
+
+        if self.player1.points <= 0:
             self.win_game()
 
         # bounce off paddles
         self.player1.bounce_ball(self.ball)
 
-        #bounce off bricks. each collision with ghg removes 5 seconds
-        if self.co2.co2_collision(self.ball) == "co2" and self.player1.timer >= 5:
-            self.player1.timer -= 5
-        if self.ch4.ch4_collision(self.ball) == "ch4" and self.player1.timer >= 5:
-            self.player1.timer -= 5
+        #bounce off bricks
+        self.co2.co2_collision(self.ball)
+        self.ch4.ch4_collision(self.ball)
 
-        # remove ball off top. each successfully reflected ball adds 5 seconds
-        if self.ball.top > self.top and self.player1.timer > 0:
-            self.player1.radiation -= 1
-            self.player1.timer += 5
+        # remove ball off top and edit points
+        if self.ball.top > self.top:
+            self.player1.points -= 1
             self.serve_ball()
 
         # bounce off sides
@@ -165,22 +159,21 @@ class Game(Widget):
         if self.ball.x > self.width:
             self.ball.velocity_x *= -1
 
-        #gradually increase brick speed while moving back and forth
+        #bouncing bricks back from edge of screen
         if self.co2.x < self.x:
-            self.co2.velocity_x *= -1 * 1.05
+            self.co2.velocity_x *= -1
 
         if self.co2.x > self.width:
-            self.co2.velocity_x *= -1 * 1.05
+            self.co2.velocity_x *= -1
 
         if self.ch4.x < self.x:
-            self.ch4.velocity_x *= -1 * 1.05
+            self.ch4.velocity_x *= -1
 
         if self.ch4.x > self.width:
-            self.ch4.velocity_x *= -1 * 1.05
+            self.ch4.velocity_x *= -1
 
         # went off bottom. each missed ball removes 5 seconds
-        if self.ball.y < self.y and self.player1.timer >= 5:
-            self.player1.timer -= 5
+        if self.ball.y < self.y:
             self.serve_ball()
 
     def play(self):
@@ -219,8 +212,7 @@ class Game(Widget):
         stops the update function and brings up menu
         """
         Clock.unschedule(self.update)
-        self.remove_widget(self.restart_button)
-        self.remove_widget(self.menu_button)
+        self.paused = True
         self.add_widget(self.restart_button)
         self.add_widget(self.menu_button)
 
@@ -229,6 +221,7 @@ class Game(Widget):
         stops the update function and brings up menu
         """
         Clock.unschedule(self.update)
+        self.paused = True
         self.add_widget(self.restart_button)
         self.add_widget(self.menu_button)
 
@@ -255,8 +248,12 @@ class Game(Widget):
         self.remove_widget(self.restart_button)
         self.remove_widget(self.menu_button)
         Clock.unschedule(self.update)
+        slider1_value = App.get_running_app().root.ids.slider1.value
+        slider2_value = App.get_running_app().root.ids.slider2.value
+        self.player1.duration = slider1_value
         self.player1.timer = self.player1.duration
-        self.player1.radiation = self.player1.radiation
+        self.player1.radiation = slider2_value
+        self.player1.points = self.player1.radiation
 
 class BrickBreakApp(App):
     """

@@ -103,7 +103,7 @@
         font_size: '20sp'
         center_x: root.center_x
         top: root.top - self.height * 2
-        text: "Radiation: " + str(root.player1.radiation)
+        text: "Radiation: " + str(root.player1.points)
 
 <Control>:
     canvas:
@@ -318,8 +318,8 @@
             size_hint: (0.4, 0.2)
             Slider:
                 id: slider1
-                min: 100
-                max: 150
+                min: 10
+                max: 200
                 step: 5
                 value_track: True
                 value_track_color: [0, 1, 0, 1]
@@ -330,7 +330,7 @@
             Slider:
                 id: slider2
                 min: 5
-                max: 15
+                max: 20
                 step: 1
                 value_track: True
                 value_track_color: [1, 0, 0, 1]

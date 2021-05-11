@@ -11,17 +11,12 @@ class Paddle(Widget):
     duration = 100
     radiation = 10
 
-    # def get_slider1_value():
-    #     return App.get_running_app().root.ids.slider1.value
-
-    # def get_slider2_value():
-    #     return App.get_running_app().root.ids.slider2.value
-
     paddleR = NumericProperty(255)
     paddleG = NumericProperty(255)
     paddleB = NumericProperty(255)
+    
     timer = NumericProperty(duration)
-    radiation = NumericProperty(radiation)
+    points = NumericProperty(radiation)
 
 
     def is_white(self):
